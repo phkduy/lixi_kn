@@ -12,6 +12,23 @@ import {
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
+function ImageGallery({ images }: { images: string[] }) {
+  return (
+    <>
+      {images.map((image, index) => (
+        <div key={index} className="aspect-square relative">
+          <Image
+            src={`/images/${image}`}
+            alt={`Gallery image ${index + 1}`}
+            fill
+            className="object-cover rounded-lg"
+          />
+        </div>
+      ))}
+    </>
+  )
+}
+
 export default function HomePage() {
   const router = useRouter()
   const [images, setImages] = useState<string[]>([])
@@ -157,16 +174,7 @@ export default function HomePage() {
           Hình Ảnh Hoạt Động
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {images.map((image, index) => (
-            <div key={index} className="relative aspect-square group">
-              <Image
-                src={`/images/${image}`}
-                alt={`Gallery image ${index + 1}`}
-                fill
-                className="object-cover rounded-lg transition-all duration-300 group-hover:scale-105"
-              />
-            </div>
-          ))}
+          <ImageGallery images={images} />
         </div>
       </div>
     </div>
